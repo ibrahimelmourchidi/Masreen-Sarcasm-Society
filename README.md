@@ -1,2 +1,2 @@
 # Masreen-Sarcasm-Society
-A blog to share sarcastic posts
+A Website to share sarcastic posts
