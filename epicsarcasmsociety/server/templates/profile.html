@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{%block content%} 
+{% if user.is_confirmed %}
+<style type="text/css">
+label[for="id_p_image"]{display: none;}
+  @media (max-width: 400px) {
+      .list-group-item{font-size:3.6vw}
+    }
+  @media (min-width: 400px) {
+      .list-group-item{font-size:1.6vw}
+    }
+</style>
+<div class = "container-fluid ">
+  <div class="row">
+ 	  <!-- <img id = "wallbg" src = "{% static 'static_mss/img/wall.png' %}" style="width: 100%;"> -->
+ 	  <div class="col-4">
+      {% if profile.p_image %}
+ 	    <img src = "{{profile.p_image.url}}" class="img-thumbnail" style="min-width: 70px; width: 100% ; min-height: 16vw; max-height: 100px" >
+      {% else %}
+      <img src = "{% static 'static_mss/img/profile.jpg' %}" class="img-thumbnail" style="min-width: 70px; width: 100% ; min-height: 16vw" >
+      {% endif %}
+ 	  </div>
+ 	  <div class="col-6">
+ 	    <p style="color:orange; font-size:4.5vw">{{profile}}</p>
+      {% if not profile.username == request.user.username %}
+ 	    <iframe src="{{request.build_absolute_uri}}followbutton" style = "max-height: 444px;border:none;"></iframe>
+      {% else %}
+      <a href="/profile/{{request.user.id}}/upload_comic/"><button class="btn btn-warning  btn-sm" type="button" style="margin-top: 8px">upload comic</button></a>
+      <a href="/profile/{{request.user.id}}/upload_vedio/"><button class="btn btn-warning  btn-sm" type="button" style="margin-top: 8px">upload vedio</button></a>
+      {%endif%}
+ 	  </div>
+ 	  <hr>
+  </div>
+	<div class="row">
+    <div class="col-4">
+      <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-info" role="tab" aria-controls="home">info</a>
+          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-comics" role="tab" aria-controls="profile">Top 5 Comics</a>
+          <a class="list-group-item list-group-item-action" id="list-vedios-list" data-toggle="list" href="#list-vedios" role="tab" aria-controls="vedios">Top 5 Vedios</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">followers</a>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="list-info" role="tabpanel" aria-labelledby="list-home-list">
+          <br>
+          {% if rank >= 0 %}
+          <p>Rank : 
+            {% for i in range_ %}
+            <img src="{% static 'static_mss/img/star.png' %}" style="max-width: 20px">
+             <button class="btn btn-warning  btn-sm" onclick="myFunction('nfo')">  
+             <img src="{% static 'static_mss/img/info.png' %}" style="max-width: 20px"></button>
+            {% endfor %}
+            <div id="info" style="display: none;color :green" >
+              <p> points = likes - lames</p>
+              <p> points > 10000  : &nbsp; rank 1</p>
+              <p> points > 30000  : &nbsp; rank 2</p>
+              <p> points > 90000  : &nbsp; rank 3</p>
+              <p> points > 180000 : rank 4</p>
+              <p> points > 360000 : rank 5</p>
+              <hr>
+           </div>
+           <!-- <progress value="22" max="100"></progress><br><br> -->
+           <!-- <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+             Next Rank Up
+            </div></div><br> -->
+          {% else %}
+        <p>Rank : 
+            {% for i in range_ %}
+            <img src="{% static 'static_mss/img/egg.png' %}" style="max-width: 20px">
+             <button class="btn btn-warning  btn-sm" onclick="myFunction('nfo')">  
+             <img src="{% static 'static_mss/img/info.png' %}" style="max-width: 20px"></button>
+            {% endfor %}
+            <p id="info">this is info</p>
+            
+
+        </p>
+          {% endif %}
+          <p>Likes   : {{likes}} </p>
+          <p>Lames   : {{lames}} </p>
+          <p id = "points">Points  : {{points}} </p>
+          <hr>
+          {% if profile.username == request.user.username %}
+            <h4 style="color:orange">Change profile picture</h4><br>
+            <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+                {{form.as_p}}
+            <button type="submit" class = "btn btn-warning  btn-sm">Change</button>
+            </form>
+
+
+          {% endif%}
+
+
+        </div>
+        <div class="tab-pane fade" id="list-comics" role="tabpanel" aria-labelledby="list-profile-list">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            {% for i in comics %}
+            {% if i.image %}
+                <div class = "card">
+                  <a href="{{i.get_absolute_url}}"><h1>{{i.title}}</h1></a>
+                  <p>Add By <a href="/{{i.user}}/">{{i.user}}</a>{{i.time|timesince}} Ago</p>
+                  <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 200px; overflow: hidden;">
+                    <a href="{{i.get_absolute_url}}"><img src="{{i.image.url}}" class="img-fluid"></a>
+                  </div>
+                </div>
+            {% endif %}
+            {% endfor %}
+          </div>  
+        </div>
+        <div class="tab-pane fade" id="list-vedios" role="tabpanel" aria-labelledby="list-vedio-list">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            {% for i in vedios %}
+            {% if not i.image %}
+              <div class = "card">
+                <a href="{{i.get_absolute_url}}"><h1>{{i.title}}</h1></a>
+                <p>Add By <a href="/{{i.user}}/">{{i.user}}</a>{{i.time|timesince}} Ago</p>
+                <a href="{{i.get_absolute_url}}"><div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="{{i.vedio_url}}" style="position:absolute;width:100%;height:100%;left:0" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></a>
+              </div>
+            {% endif %}   
+            {% endfor %}
+            <!--vedio pagination starts here -->
+            <!--vedio pagination ends here -->
+          </div>
+          
+        </div>
+        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+          <iframe src="{{request.build_absolute_uri}}followers" style = "min-height: 700px; border:none;"></iframe>
+          <!--   {% for user in followers %}
+              {% if user.p_image %}
+              <img src = "{{user.p_image.url}}" class="img-fluid" style="min-width: 15px; max-width: 70px ; float: left; margin-right: 5px;" >
+              {% else %}
+              <img src = "{% static 'static_mss/img/profile.jpg' %}" class="img-fluid" style="min-width: 15px; max-width: 70px;margin-right: 5px; float: left;" >
+              {% endif %}
+              <h4 ><a style="color: orange ; text-decoration: none" href="/profile/{{user.id}}/">  {{user.username}} </a></h4><br>
+              <hr>
+            {% endfor %} -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%else%}
+<h1 color = "orange"> Sorry your acount is not confirmed click <a href="confirm">here</a> to confirm it . </h1>
+{% endif %}
+
+<script>
+function myFunction(id) {
+    var x = document.getElementById('info');
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+{%endblock%}

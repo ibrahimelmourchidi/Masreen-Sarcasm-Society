@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% for i in qs %}
+<style>
+    .Title:hover {
+        color:black;
+}
+</style>
+
+<div class = "card">
+	<a class = "Title" style="color: orange ; text-decoration: none;" href="{{i.get_absolute_url}}"><h1 class = "Title">{{i.title}}</h1></a>
+	<p>Add By <a href="/profile/{{i.user.id}}/">{{i.user}}</a>  , {{i.time|timesince}} Ago</p>
+    <p>{{i.content}}</p>
+	{%if i.image%}
+		<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="height: 200px; overflow:hidden;align-items: center;">
+           <a href="{{i.get_absolute_url}}"><img src="{{i.image.url}}" class="img-fluid"></a></div>
+	{%endif%}
+	{%if i.vedio_url%}
+		<a href="{{i.get_absolute_url}}"><div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="{{i.vedio_url}}" style="position:absolute;width:100%;height:100%;left:0" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div></a>
+	{%endif%}
+
+</div><br>
+{%endfor%}
+<div class="pagination">
+    <span class="step-links">
+        {% if qs.has_previous %}
+            <a href="?page={{ qs.previous_page_number }}" class="btn btn-warning my-2 btn-sm"><< previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ qs.number }} of {{ qs.paginator.num_pages }}.
+        </span>
+
+        {% if qs.has_next %}
+            <a href="?page={{ qs.next_page_number }}" class="btn btn-warning my-2 btn-sm">next >> </a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

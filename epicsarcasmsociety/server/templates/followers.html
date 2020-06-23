@@ -1,0 +1,30 @@
+{% load static %}
+    <link rel="stylesheet" href="{% static 'static_mss/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'static_mss/css/style.css' %}">
+
+  		{% for user in followers %}
+          {% if user.p_image %}
+          <img src = "{{user.p_image.url}}" class="img-fluid" style="min-width: 15px; max-width: 70px ; float: left; margin-right: 5px; max-height: 55px;" >
+          {% else %}
+          <img src = "{% static 'static_mss/img/profile.jpg' %}" class="img-fluid" style="min-width: 15px; max-width: 70px;margin-right: 5px; float: left;" >
+          {% endif %}
+          <h4 ><a style="color: orange ; text-decoration: none" href="/profile/{{user.id}}/" target = "_parent">  {{user.username}} </a></h4><br>
+          <hr>
+        {% endfor %}
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if followers.has_previous %}
+            <a href="?page={{ followers.previous_page_number }}" class="btn btn-warning my-2 btn-sm"><< previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ followers.number }} of {{ followers.paginator.num_pages }}.
+        </span>
+
+        {% if followers.has_next %}
+            <a href="?page={{ followers.next_page_number }}" class="btn btn-warning my-2 btn-sm">next >> </a>
+        {% endif %}
+    </span>
+</div>

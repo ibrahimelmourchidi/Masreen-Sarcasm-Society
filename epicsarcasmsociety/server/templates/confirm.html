@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+{% if messages %}
+<ul class="messages alert alert-danger">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+ <h4>Thanks <span style="color: orange ;">{{request.user.username}}</span> for Registeration at masreen_sarcasm</h4>
+ <p> Please activate your account to be able to add Posts & View your profile . </p>
+ <p>confirmation code was sent to "{{request.user.email}}" please check your email</p>
+ <a href="/resend_confirm/" target="resend"><button class="btn btn-warning btn-sm"  type="submit">Resend Activation Code</button></a>
+ <br>
+ <iframe style="max-width: 320px ; max-height: 35px ; border:none;" id = "resend" name="resend"></iframe>
+ <br> <br>
+ <form method="POST" class = "form">{% csrf_token %}
+ 	{{form}}
+ 	<button type="submit">Activate</button>
+ </form>
+
+{% endblock %}

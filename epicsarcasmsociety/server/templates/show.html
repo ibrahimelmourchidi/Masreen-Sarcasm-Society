@@ -1,0 +1,104 @@
+{%extends "base.html"%}
+{% load static %}
+{% block content %}
+<style type="text/css">
+  @media (max-width: 400px) {
+      #post_info{font-size:3.6vw}
+      #edit{font-size:3.6vw}
+      #delete{font-size:3.6vw}
+    }
+  @media (min-width: 400px) {
+      #post_info{font-size:1.5vw}
+      #edit{font-size:1.6vw}
+      #delete{font-size:1.6vw}
+    }
+</style>
+	<h1>{{qs.title}}</h1>
+	<span id = "post_info" >Added By <a href="/profile/{{qs.user.id}}/">{{qs.user}} </a>, {{qs.time|timesince}} Ago</span>
+	<br>
+	{% if qs.content %} <br>
+	<p style="text-indent: 25px"> {{qs.content}}</p>
+	{% endif %}
+	<div style=" text-align: center; margin-top: 8px"><br>
+	{%if request.user == qs.user %}
+		<span style="float: left"><b>{{qs.likes.count}} likes , {{qs.lames.count}} lames</b></span>
+		{% if qs.category == "comic" %}
+		<a href="{{qs.id}}/iedit/"><button id = "edit" class="btn btn-primary  btn-sm" type="button" style="float: right;">Edit</button></a>
+    	{% else %}
+    	<a href="{{qs.id}}/vedit/"><button id = "edit" class="btn btn-primary  btn-sm" type="button" style="float: right;">Edit</button></a>
+    	{% endif %}
+    	<a href="{{qs.id}}/delete/"><button id = "delete" class="btn btn-danger  btn-sm" type="button" style="float: right;">Delete</button></a>
+	{% else %}
+	<iframe src="{{qs.get_absolute_url}}/likebutton" style = "max-height: 44px;border:none;"></iframe>
+	{% endif %}
+	</div>
+	{%if qs.image%}
+	<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    	<img id = "image" src="{{qs.image.url}}" class="img-fluid"  width="{{qs.width_field}}" style="align-self:center;"><br>
+    </div>
+    {%endif%}
+    {%if qs.vedio_url%}
+    	{% if request.user == qs.user %}
+    		<br><br>
+    	{%endif%}
+		<div style="position:relative;height:0;padding-bottom:56.25% ; display: block;"><iframe src="{{qs.vedio_url}}" style="position:absolute;width:100%;height:100%;left:0" width="640" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    	
+	{%endif%}
+<hr>
+<div id = "Post nav" style="text-align: center;">
+	{% if not previous_ == None %}
+	<a id="prevLink" href='/post/{{previous_}}'><button class="btn btn-warning  btn-sm" type="button" style="margin-top: 8px"><< Previous Post</button></a> 
+	{% endif %}
+	{% if not next_ == None %}
+	<a id="nextLink" href='/post/{{next_}}'><button class="btn btn-warning  btn-sm" type="button" style="margin-top: 8px">Next Post >></button></a>.
+	{% endif %}
+</div>
+<hr>
+<div id = "Post nav" style="text-align: center;">
+<a id = "fb" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
+    	<Button class = "btn btn-primary offset-md-1"  style = "margin-top: 10px;">Share on Facebook</Button>
+</a>
+<a id = "tw" href="https://twitter.com/home?status=lolz%20{{request.build_absolute_uri}}" target="_blank">
+    	<Button style = "margin-top: 10px;" class = "btn btn-info "  >Share on Twitter</Button>
+</a>
+<a id = "G+" href='https://plus.google.com/share?url={{request.build_absolute_uri}}' target="_blank"><Button style = "margin-top: 10px;" class = "btn btn-danger ">Share on Google+</Button></a>
+</div>
+<hr>
+<!-- facebook start -->
+<div class="fb-comments " data-href="{{request.build_absolute_uri}}" data-width="100%" data-numposts="5"></div>
+<!-- facebook end -->
+
+<script type="text/javascript">
+	document.addEventListener("keyup",function(e){
+   var key = e.which||e.keyCode;
+   switch(key){
+      //left arrow
+      case 37:
+         document.getElementById("prevLink").click();
+      break;
+      //right arrow
+      case 39:
+         document.getElementById("nextLink").click();
+      break;
+   }
+});
+	
+</script>
+
+
+<script>
+	var url = window.location.href
+	document.getElementById("fb").href += url
+	document.getElementById("G+").href += url
+	var width = document.getElementById("image").width
+	// var max_image_height = width *{{qs.height_field}} / {{qs.width_field}}
+	document.getElementById("image").height = width *{{qs.height_field}} / {{qs.width_field}}
+	var height = document.getElementById("image").height
+	document.getElementById("try").innerHTML += "working" + "///" + height +"///"+"{{qs.get_absolute_url}}"
+</script>
+
+
+
+
+
+{%endblock%}

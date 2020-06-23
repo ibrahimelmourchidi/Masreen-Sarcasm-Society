@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{%block content%}
+<style type="text/css">
+  label[for="id_email"]{display: none;}
+  label[for="id_password"]{display: none;}
+  label[for="id_password2"]{display: none;}
+  label[for="id_username"]{display: none;}
+  label[for="id_vedio_url"]{display: none;}
+  .helptext{display: none}
+</style>
+  <div class="login-page">
+  <div class="form">
+    {% if title == "signup"%}
+    <form class="register-form2" method="POST">{% csrf_token %}
+      {{form|crispy}}
+      <button type="submit">Sign Up</button>
+    </form>
+    {% endif %}
+    {% if title == "login" %}
+    <form class="register-form2" method="POST">{% csrf_token %}
+      {{form|crispy}}
+      <button type="submit">Log In</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{{request.user.username}}
+<br><br><br><br>
+<script >
+  document.getElementById('id_username').placeholder= "User Name"
+  document.getElementById('id_email').placeholder= "Email"
+  document.getElementById('id_password').placeholder= "Password"
+  document.getElementById('id_password2').placeholder= "Confirm Password"
+</script>
+<!--<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>-->
+
+{%endblock%}

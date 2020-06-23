@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% if user.is_confirmed %}
+<style type="text/css">
+	.helptext{display: none}
+	label[for="id_image"]{display: none;}
+	label[for="id_content"]{display: none;}
+</style>
+<div class="login-page" >
+	<div class="form">
+	<form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+	{{form|crispy}}
+	<button type="submit">Create</button>
+	</form>
+	</div></div>
+<script >
+  document.getElementById('id_title').placeholder= "Comic Title"
+  document.getElementById('id_content').placeholder= "Descripte your Comic (optional)"
+</script>
+{%else%}
+<h1 color = "orange"> Sorry your acount is not confirmed click <a href="confirm">here</a> to confirm it . </h1>
+{% endif %}
+ {% endblock %}

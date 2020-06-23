@@ -1,0 +1,22 @@
+{% load static %}
+    <link rel="stylesheet" href="{% static 'static_mss/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'static_mss/css/style.css' %}">
+{% if request.user.is_authenticated %}
+<div style="text-align: left;">
+	{% if follow_statue %}
+	<a href="{{qs.get_absolute_url}}unfollow" ><button type="button" class="btn btn-secondary " >{{qs.followers.count }} | Followed ✓</button></a>
+	{% else %}
+	<a href="{{qs.get_absolute_url}}follow" ><button class="btn btn-warning" type="button"><img src = "{% static 'static_mss/img/follow2.png' %}" style="max-width:25px; margin-right: 5px;">{{qs.followers.count }} | Follow </button></a>
+	{% endif %}
+</div>
+{% else %}
+<div style="text-align: left;">
+	{% if follow_statue %}
+	<a target="_parent" href="/login/" ><button id = 'unlike' type="button" class="btn btn-secondary " >{{qs.followers.count }} | Followed ✓</button></a>
+	{% else %}
+	<a target="_parent" href="/login/" ><button class="btn btn-warning" type="button"><img src = "{% static 'static_mss/img/follow2.png' %}" style="max-width:25px; margin-right: 5px;">{{qs.followers.count }} | Follow </button></a>
+	{% endif %}
+</div>
+{% endif %}
+
+

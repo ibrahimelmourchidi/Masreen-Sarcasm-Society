@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+{{n}}
+{% for i in qs %}
+{% if request.user in i.notification_user.all and not request.user in i.seen.all %}
+	<a href="/profile/{{i.user.id}}/">{{i.user}}</a>  added new {{i.category}} <a href="{{i.get_absolute_url}}" style="color: orange ; text-decoration: none;">{{i.title}}</a>, {{i.time | timesince}} Ago .
+	<br> <hr>
+{% endif %}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_confirmed %}
+<style type="text/css">
+	.helptext{display: none}
+	label[for="id_content"]{display: none;}
+</style>
+<h3>Note : To upload a vedio please Upload it first to youtube then paste the vedio url here.</h3> 
+<div class="login-page">
+	<div class="form">
+	<form method="POST" action="">{% csrf_token %}
+	{{form.as_p}}
+	<button type="submit">Create</button>
+	</form>
+	</div></div>
+<script >
+  document.getElementById('id_title').placeholder= "Vedio Title."
+  document.getElementById('id_content').placeholder= "Describe your Vedio (optional)."
+  document.getElementById('id_vedio_url').placeholder= "Put the url from youtube here."
+</script>
+{%else%}
+<h1 color = "orange"> Sorry your acount is not confirmed click <a href="confirm">here</a> to confirm it . </h1>
+{% endif %}
+ {% endblock %}

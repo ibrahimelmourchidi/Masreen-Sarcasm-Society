@@ -1,0 +1,3 @@
+{% for follow in follows %}
+    {% for i in follow.followers.all %}{{ i.followers }}{% endfor %}
+{% endfor %}

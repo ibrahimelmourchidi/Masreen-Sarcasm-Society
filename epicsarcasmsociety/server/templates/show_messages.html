@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+{% for i in qs %}
+<h3 style="color: orange ;"> {{i.title}}</h3> <span style="color: grey;">{{i.time|timesince}} ago</span>
+<p id="{{i.title}}" style="display: none;">{{i.content}}</p>
+<button class="btn btn-warning  btn-sm" style="float: right;" id = "{{i.title}}b" onclick="myFunction('{{i.title}}','{{i.title}}b')">Read</button>
+<br>
+<hr size = "3"   style="color:orange; size: 3px ">
+ <br>
+{% endfor %}
+
+
+
+
+<script>
+function myFunction(id , id2) {
+    var x = document.getElementById(id);
+    var y = document.getElementById(id2);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+        y.innerHTML = "Hide";
+    } else {
+        x.style.display = "none";
+        y.innerHTML = "Read";
+    }
+}
+</script>
+
+{% endblock %}

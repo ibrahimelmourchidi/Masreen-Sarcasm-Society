@@ -1,0 +1,113 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <style type="text/css">
+  label[for="id_email"]{display: none;}
+  label[for="id_password"]{display: none;}
+  label[for="id_password2"]{display: none;}
+  label[for="id_username"]{display: none;}
+  label[for="id_vedio_url"]{display: none;}
+  label[for="id_title"]{display: none;}
+  .helptext{display: none}
+</style>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-4551410882281097",
+    enable_page_level_ads: true
+  });
+</script>
+    <title>mss | {{title}}</title>
+    <link rel="stylesheet" href="{% static 'static_mss/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'static_mss/css/style.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+
+  </head>
+  <body>
+<!--     facebook start -->
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- facebook ends -->
+<div class = "container-fluid">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-none">
+    <a class="navbar-brand" href="/"><img class = "logo col-xs-12" src="{% static 'static_mss/img/logo.png' %}"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link orange" href="/"><img class = "icon" src = "{% static 'static_mss/img/home.png' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item"> 
+          {% if request.user.is_authenticated %}
+          <a class="nav-link orange" href="/profile/{{request.user.id}}/"><img class = "icon" src = "{% static 'static_mss/img/profile.png' %}">Profile</a>
+          {% else %}
+          <a class="nav-link orange" href="/login/"><img class = "icon" src = "{% static 'static_mss/img/profile.png' %}">Profile</a>
+          {% endif %}
+        </li>
+        <li class="nav-item  dropdown ">
+          <a class="nav-link orange dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img class = "icon" src = "{% static 'static_mss/img/new.png' %}"> New Feeds
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/comics/">New Comics</a>
+            <a class="dropdown-item" href="/vedios/">New Vedios</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Top</a>
+          </div>
+        </li>
+      </ul>
+      <!-- language selector start -->
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <!--      <div >
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img style="max-width:20px" src="{% static 'static_mss/img/eng.png' %}">&nbsp;&nbsp;<span id="lanNavSel">En</span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a id="navIta" href="/" class="language"> <img id="imgNavIta" src="{% static 'static_mss/img/eng.png' %}" style="max-width:20px">&nbsp;&nbsp;En</a></li>
+                        <li><a id="navDeu" href="/ar/" class="language"> <img id="imgNavDeu" src="{% static 'static_mss/img/ar.png' %}" style="max-width:20px">&nbsp;&nbsp;Ar</a></li>
+                  </ul>
+                </li>
+            </ul>
+        </div><br>&nbsp;&nbsp; -->
+      <!-- language selector end -->
+      {% if not request.user.is_authenticated %}
+      <a href="/signup/"><button class="btn btn-warning my-2 my-sm-0" type="button">Sign Up</button></a>
+      <a href="/login/"><button class="btn btn-warning my-2 my-sm-0" type="button">Log In</button></a>
+      {% else %}
+            <iframe src="/message_notification/" style = "max-height: 50px;border:none;max-width:150px"></iframe>
+      <a href="/logout/"><button class="btn btn-danger my-2 btn-sm" type="button">Log out</button></a>
+      {% endif %}
+    </div>
+  </nav><br><br><br>
+  <div class = "row">
+  <div class="card col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" style="border:none;">
+    <!-- <img class="card-img-top" style="width : 100% ;height: 500px" src="{% static 'static_mss/img/vodafone.gif' %}" alt="Card image cap"> -->
+  </div>
+  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+    {% block content %} {% endblock %}
+  </div>
+  
+  <div class="card col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" style="border:none;">
+<!--     <img class="card-img-top" style="height: 500px" src="{% static 'static_mss/img/cocacola.gif' %}" alt="Card image cap"> -->
+  </div>
+  </div>
+</div>
+<br><br><br>
+      <script src = "{% static 'static_mss/js/jquery-3.3.1.min.js'%}"></script>
+      <script src = "{% static 'static_mss/js/bootstrap.js'%}"></script>
+      
+  </body>
+</html>

@@ -1,0 +1,59 @@
+{% load static %}
+    <link rel="stylesheet" href="{% static 'static_mss/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'static_mss/css/style.css' %}">
+{% if request.user.is_authenticated %}
+<div style="text-align: center;">
+	{% if not previous_ == None %}
+	<a id="prevLink" href='/post/{{previous_}}' target="_parent"></a> 
+	{% endif %}
+	{% if like_statue %}
+	<a href="{{qs.get_absolute_url}}/unlike" ><button id = 'unlike' type="button" class="btn btn-secondary ">{{likes }} | Liked ✓</button></a>
+	{% else %}
+	<a href="{{qs.get_absolute_url}}/like" ><button  id = 'like' type="button" class="btn btn-danger " >{{likes}} | Like ♥</button></a>
+	{% endif %}
+	{% if lame_statue %}
+	<a href="{{qs.get_absolute_url}}/unlame" ><button id = 'unlike' type="button" class="btn btn-secondary ">{{lames }} | lame ✓</button></a>
+	{% else %}
+	<a href="{{qs.get_absolute_url}}/lame" ><button  id = 'like' type="button" class="btn btn-dark ">{{lames}} | lame <img class = "icon" src = "{% static 'static_mss/img/lame.png' %}"></button></a>
+	{% endif %}
+	{% if not next_ == None %}
+	<a id="nextLink" href='/post/{{next_}}' target="_parent"></a>.
+	{% endif %}
+</div>
+{% else %}
+<div style="text-align: center;">
+	{% if not previous_ == None %}
+	<a id="prevLink" href='/post/{{previous_}}' target="_parent"></a> 
+	{% endif %}
+	{% if like_statue %}
+	<a target="_parent" href="/login/" ><button id = 'unlike' type="button" class="btn btn-secondary " >{{likes }} | Liked ✓</button></a>
+	{% else %}
+	<a target="_parent" href="/login/" ><button  id = 'like' type="button" class="btn btn-danger " >{{likes}} | Like ♥</button></a>
+	{% endif %}
+	{% if lame_statue %}
+	<a target="_parent" href="/login/" ><button id = 'unlike' type="button" class="btn btn-secondary ">{{lames }} | lame ✓</button></a>
+	{% else %}
+	<a target="_parent" href="/login/" ><button  id = 'like' type="button" class="btn btn-dark ">{{lames}} | lame <img class = "icon" src = "{% static 'static_mss/img/lame.png' %}"></button></a>
+	{% endif %}
+	{% if not next_ == None %}
+	<a id="nextLink" href='/post/{{next_}}' target="_parent"></a>.
+	{% endif %}
+</div>
+{% endif %}
+
+<script type="text/javascript">
+	document.addEventListener("keyup",function(e){
+   var key = e.which||e.keyCode;
+   switch(key){
+      //left arrow
+      case 37:
+         document.getElementById("prevLink").click();
+      break;
+      //right arrow
+      case 39:
+         document.getElementById("nextLink").click();
+      break;
+   }
+});
+	
+</script>

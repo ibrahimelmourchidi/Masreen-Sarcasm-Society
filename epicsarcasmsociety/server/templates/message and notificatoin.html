@@ -1,0 +1,47 @@
+{% load static %}
+
+<a class="nav-link " href="/messages/" target="_parent" style="margin-right:10px"><img class = "icon " style ="max-width: 25px ; margin-left: 15px; max-height:25px; "  src = "{% static 'static_mss/img/message.png' %}"></a>{% if nm %}<i class="fa fa-envelope fa-5x fa-border icon-grey badge"></i>{% endif %}
+<a class="nav-link " href="/show_notification/" target="_parent" style="margin-right:10px"><img class = "icon " style ="max-width: 25px ; margin-left: 15px; max-height:25px; "  src = "{% static 'static_mss/img/noti.png' %}"></a>{% if nn %}<i class="fa fa-envelope fa-5x fa-border icon-grey badge2"></i>{% endif %}
+
+<style>
+	*.icon-blue {color: #0088cc}
+*.icon-grey {color: grey}
+i {   
+    width:100px;
+    text-align:center;
+    vertical-align:middle;
+    position: relative;
+}
+.badge:after{
+    content:"{{nm}}";
+    position: absolute;
+    background: red;
+    height:1rem;
+    top:0rem;
+    right:0rem;
+    width:1rem;
+    font-family: "Arial";
+    text-align: center;
+    line-height: 1.25rem;;
+    font-size: 1rem;
+    border-radius: 50%;
+    color:white;
+    border:1px solid red;
+}
+.badge2:after{
+    content:"{{nn}}";
+    position: absolute;
+    background: red;
+    height:1rem;
+    top:0rem;
+    right:0rem;
+    width:1rem;
+    font-family: "Arial";
+    text-align: center;
+    line-height: 1.25rem;;
+    font-size: 1rem;
+    border-radius: 50%;
+    color:white;
+    border:1px solid red;
+}
+</style>
